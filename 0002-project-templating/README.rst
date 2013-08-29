@@ -125,22 +125,22 @@ The one issue I have its that it's somewhat heavyweight; it pulls in the
 following dependencies in addition to the ones installed by the other packages
 I've been trying out:
 
- * cornice
- * waitress
- * django
- * mock
- * webtest
- * pyramid
- * simplejson
- * WebOb
- * beautifulsoup4
- * Chameleon
- * Mako
- * repoze.lru
- * zope.interface
- * zope.deprecation
- * venusian
- * translationstring
+* cornice
+* waitress
+* django
+* mock
+* webtest
+* pyramid
+* simplejson
+* WebOb
+* beautifulsoup4
+* Chameleon
+* Mako
+* repoze.lru
+* zope.interface
+* zope.deprecation
+* venusian
+* translationstring
 
 That, to be frank, is crazypants. Moreover, it's written with Pyramid, so why
 it needs to pull in Django as a requirement rather than as an 'extra' is a
