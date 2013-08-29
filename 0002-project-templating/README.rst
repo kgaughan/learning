@@ -20,96 +20,96 @@ and I can't install it from PyPI, so both of those eliminate it early.
 Templer
 -------
 
- - Installed as `templer.core <https://pypi.python.org/pypi/templer.core>`_
+- Installed as `templer.core <https://pypi.python.org/pypi/templer.core>`_
 
- - Last updated 2012-05-18; last repo activity 2013-04-25
+- Last updated 2012-05-18; last repo activity 2013-04-25
 
- - Uses `cheetah <https://pypi.python.org/pypi/Cheetah>`_ as its template
-   engine; would prefer Jinja
+- Uses `cheetah <https://pypi.python.org/pypi/Cheetah>`_ as its template
+  engine; would prefer Jinja
 
- - Templates are installed as python packages and use setuptools hooks to
-   register themselves
+- Templates are installed as python packages and use setuptools hooks to
+  register themselves
 
- - Also ends up installing Paste, PasteDeploy, and PasteScript_, which is
-   peculiar to say the least
+- Also ends up installing Paste, PasteDeploy, and PasteScript_, which is
+  peculiar to say the least
 
- - Slight legacy Plone/Zope bias
+- Slight legacy Plone/Zope bias
 
- - Documentation on how to create new templates is lacking
+- Documentation on how to create new templates is lacking
 
- - Invoked as follows::
+- Invoked as follows::
 
-     $ templer <template> <output-name>
+    $ templer <template> <output-name>
 
- - Output from ``templer --help`` indicates that it's intended to be a wrapper
-   around PasteScript_
+- Output from ``templer --help`` indicates that it's intended to be a wrapper
+  around PasteScript_
 
- - I'm not seeing much advantage over just using ``paster create``.
+- I'm not seeing much advantage over just using ``paster create``.
 
 mr.bob
 ------
 
- - Silly name
+- Silly name
 
- - Works on python 2 and 3 without having to be ran through 2to3
+- Works on python 2 and 3 without having to be ran through 2to3
 
- - Uses Jinja as its template engine
+- Uses Jinja as its template engine
 
- - Last update was 2013-06-09.
+- Last update was 2013-06-09.
 
- - Intended as a successor to both PasteScript_ and Templer_.
+- Intended as a successor to both PasteScript_ and Templer_.
 
- - Developer proposed a merger with cookiecutter_ recently and may be
-   abandoning it in favour of cookiecutter_:
-   https://github.com/audreyr/cookiecutter/issues/44
+- Developer proposed a merger with cookiecutter_ recently and may be
+  abandoning it in favour of cookiecutter_:
+  https://github.com/audreyr/cookiecutter/issues/44
 
- - Templates also installed as python packages
+- Templates also installed as python packages
 
- - Documentation is quite good
+- Documentation is quite good
 
- - Invoked as follows::
+- Invoked as follows::
 
-     $ mrbob [-O<output-name>] <template>
+    $ mrbob [-O<output-name>] <template>
 
-   The default output directory is the current directory.
+  The default output directory is the current directory.
 
- - Format for template names is <package>:<template> as unfortunately it
-   doesn't use setuptools hooks.
+- Format for template names is <package>:<template> as unfortunately it
+  doesn't use setuptools hooks.
 
- - Filename templating is pretty much the same as PasteScript: +placeholder+
+- Filename templating is pretty much the same as PasteScript: +placeholder+
 
 .. _cookiecutter:
 
 cookiecutter
 ------------
 
- - Less silly name.
+- Less silly name.
 
- - Definitely under active development, and it seems to have a good-size
-   community.
+- Definitely under active development, and it seems to have a good-size
+  community.
 
- - Plays nice with Python 2 and 3.
+- Plays nice with Python 2 and 3.
 
- - Also uses Jinja.
+- Also uses Jinja.
 
- - It has directory and repo based templates, but unfortunately not
-   package-based ones.
+- It has directory and repo based templates, but unfortunately not
+  package-based ones.
 
- - Documentation needs work: the structure of templates isn't explained, but
-   the API is well-documented.
+- Documentation needs work: the structure of templates isn't explained, but
+  the API is well-documented.
 
- - More uniform templating than PasteScript-derived systems: Jinja is used
-   for everything.
+- More uniform templating than PasteScript-derived systems: Jinja is used
+  for everything.
 
- - Invoked as follows::
+- Invoked as follows::
 
-     $ cookiecutter <template>
+    $ cookiecutter <template>
 
-   The output directory name is generated based on your answers upon
-   invocation.
+  The output directory name is generated based on your answers upon
+  invocation.
 
- - git interfacing involves shelling out to use git rather than depending
-   on the likes of dulwich.
+- git interfacing involves shelling out to use git rather than depending
+  on the likes of dulwich.
 
 .. _diecutter:
 
