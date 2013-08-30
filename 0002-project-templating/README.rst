@@ -31,7 +31,8 @@ Templer
   register themselves
 
 - Also ends up installing Paste, PasteDeploy, and PasteScript_, which is
-  peculiar to say the least
+  peculiar to say the least [Edit: turns out that Templer is essentially a
+  thin wrapper around PasteScript.]
 
 - Slight legacy Plone/Zope bias
 
@@ -45,6 +46,10 @@ Templer
   around PasteScript_
 
 - I'm not seeing much advantage over just using ``paster create``.
+
+**Verdict**: Nope.
+
+.. _mr.bob:
 
 mr.bob
 ------
@@ -78,6 +83,8 @@ mr.bob
 
 - Filename templating is pretty much the same as PasteScript: +placeholder+
 
+**Verdict**: Possibly, yes.
+
 .. _cookiecutter:
 
 cookiecutter
@@ -110,6 +117,9 @@ cookiecutter
 
 - git interfacing involves shelling out to use git rather than depending
   on the likes of dulwich.
+
+**Verdict**: Possibly yes; nice basis for a diecutter-style service; could
+do with additional patches to add missing features.
 
 .. _diecutter:
 
