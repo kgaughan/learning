@@ -138,5 +138,3 @@ let accounts_holding symb accdb =
                              else
                                z)
                accdb [];;
-
-(* vim:set ft=ocaml et ts=2 sw=3 sts=2: *)
