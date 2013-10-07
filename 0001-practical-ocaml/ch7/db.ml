@@ -230,3 +230,46 @@ let export_accounts db filename =
   let oc = open_out filename in
   Hashtbl.iter (fun key data -> Printf.fprintf oc "%s\n" (string_of_account data)) db;
   close_out oc;;
+
+let account_of_string str =
+  let rec build_pos sb accum =
+    let getnextch =
+      try
+        Scanf.bscanf sb "%c"
+                     (fun issep ->
+                      match issep with
+                      | '|' -> Scanf.bscanf sb "%s %i %f"
+                                            (fun x y z ->
+                                             Some {symbol = x;
+                                                   holding = y;
+                                                   pprice = z})
+                      | _ -> raise (Invalid_argument "Malformed position"))
+      with End_of_file -> None
+    in
+    match getnextch with
+    | None -> accum
+    | Some p -> build_pos sb (p :: accum)
+  in
+  let scan_buffer = Scanf.Scanning.from_string str in
+  let acc_name, mih = Scanf.bscanf scan_buffer "%s@|%f" (fun x y -> x, y) in
+  let pslist = build_pos scan_buffer [] in
+  {name = acc_name;
+   max_ind_holding = mih;
+   pos = pslist};;
+
+let import_accounts dstore filename =
+  let ic = open_in filename in
+  let rec iaccts chan store =
+    let newacc =
+      try
+        Some (account_of_string (input_line ic))
+      with End_of_file -> None
+    in
+    match newacc with
+    | None -> ()
+    | Some p -> Hashtbl.add store p.name p;
+                iaccts ic store
+  in
+  let res = iaccts ic dstore in
+  close_in ic;
+  res;;
