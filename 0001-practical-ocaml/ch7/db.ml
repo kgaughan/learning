@@ -138,3 +138,95 @@ let accounts_holding symb accdb =
                              else
                                z)
                accdb [];;
+
+let print_position pos =
+  print_string "Holding: ";
+  print_int pos.holding;
+  print_string (" " ^ pos.symbol ^ "@");
+  print_float pos.pprice;
+  print_newline ();;
+
+let print_account acct =
+  print_string ("Account ID: " ^ acct.name);
+  print_newline ();
+  List.iter print_position acct.pos;;
+
+let summary_stats items =
+  let total = List.fold_left (+.) 0. items in
+  let mean = (total /. (float_of_int (List.length items))) in
+  let median = List.nth items ((List.length items) / 2) in
+  let std_dev =
+    sqrt ((List.fold_left (fun y n -> ((n -. mean) *. (n -. mean)) +. y)
+                          0.
+                          items) /. (float_of_int (List.length items))) in
+  total, mean, median, std_dev;;
+
+let rec top_n source acc counter =
+  match source with
+  | h :: t when (counter = 0) -> List.rev acc
+  | h :: t when (counter > 0) -> top_n t (h :: acc) (counter - 1)
+  | _ -> assert false;;
+
+let top_10 db new_prices =
+  let lst = List.sort (fun (m, n) (x, y) -> compare y n)
+                      (Hashtbl.fold (fun x y z -> ((x, profit_and_loss y new_prices) :: z)) db []) in
+  top_n lst [] 10;;
+
+let bottom_10 db new_prices =
+  let lst = List.sort (fun (m, n) (x, y) -> compare n y)
+                      (Hashtbl.fold (fun x y z -> ((x, profit_and_loss y new_prices) :: z)) db []) in
+  top_n lst [] 10;;
+
+let print_top_report title lst =
+  let rec toprep buf items =
+    match items with
+    | [] ->
+      let (sum, mn, med, stdev) = summary_stats (List.map (fun (x, y) -> y) lst) in
+        Buffer.add_string buf "------------------\n";
+        Buffer.add_string buf (Printf.sprintf "Sum:\t%-0.2f\n" sum);
+        Buffer.add_string buf (Printf.sprintf "Mean:\t%-0.2f\n" mean);
+        Buffer.add_string buf (Printf.sprintf "Median:\t%-0.2f\n" med);
+        Buffer.add_string buf (Printf.sprintf "Stdev:\t%-0.2f\n" stdev);
+        print_string (Buffer.contents buf)
+    | (sy, pr) :: t ->
+        Buffer.add_string buf (Printf.sprintf "%s:\t%-0.2f\n" sy pr);
+        toprep buf t
+  in
+  let newbuf = Buffer.create 100 in
+  Buffer.add_string newbuf title;
+  Buffer.add_string newbuf "\n------------------\n";
+  Buffer.add_char newbuf '\n';
+  toprep newbuf lst;;
+
+let price_to_string (m, n) =
+  Printf.sprintf "%s %0.4f" m n;;
+
+let string_of_position pos =
+  Printf.sprintf "%s %i %0.4f" pos.symbol pos.holding pos.pprice;;
+
+let price_from_string s =
+  Scanf.sscanf s "%s %f" (fun x y -> x, y);;
+
+let position_of_string s =
+  Scanf.sscanf s "%s %i %0.4f" (fun x y z -> {symbol = x;
+                                              holding = y;
+                                              pprice = z});;
+
+let string_of_account acct =
+  let rec build_pos poslist accum =
+    match poslist with
+    | [] -> Buffer.contents accum
+    | h :: t -> Buffer.add_char accum '|';
+                Buffer.add_string accum (string_of_position h);
+                build_pos t accum
+  in
+  let temp_buf = Buffer.create 100 in
+  Buffer.add_string temp_buf acct.name;
+  Buffer.add_char temp_buf '|';
+  Buffer.add_string temp_buf (string_of_float acct.max_ind_holding);
+  build_pos acct.pos temp_buf;;
+
+let export_accounts db filename =
+  let oc = open_out filename in
+  Hashtbl.iter (fun key data -> Printf.fprintf oc "%s\n" (string_of_account data)) db;
+  close_out oc;;
