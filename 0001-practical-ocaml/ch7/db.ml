@@ -273,3 +273,40 @@ let import_accounts dstore filename =
   let res = iaccts ic dstore in
   close_in ic;
   res;;
+
+let rand_char () =
+  let flip = Random.bool () in
+  match flip with
+  | true -> Char.chr ((Random.int 9) + 48)
+  | false -> Char.chr ((Random.int 26) + 97);;
+
+let random_acct_name len =
+  let rec ran indx str =
+    match indx with
+    | 0 -> str.[0] <- rand_char ();
+           str
+    | _ -> str.[indx] <- rand_char ();
+           ran (indx - 1) str
+  in
+  ran (len - 1) (String.create len);;
+
+let rec gen_random_pos_list len accu price_list =
+  match len with
+  | 0 -> accu
+  | _ -> let (sym, price) =
+           List.nth price_list (Random.int (List.length price_list)) in
+         gen_random_pos_list (len - 1) ({symbol = sym;
+                                         holding = (Random.int 1000);
+                                         pprice = price} :: accu) price_list;;
+
+let gen_random_account current_prices =
+  {name = (random_acct_name 5);
+   max_ind_holding = ((Random.float 0.8) + 0.2);
+   pos = gen_random_pos_list ((Random.int 9) + 1) [] current_prices};;
+
+let rec populate_db rand_cands store current_prices =
+  match rand_cands with
+  | 0 -> ()
+  | _ -> let newacc = gen_random_account current_prices in
+         Hashtbl.add store newacc.name newacc;
+         populate_db (rand_cands - 1) store current_prices;;
