@@ -14,4 +14,5 @@ ID   Date       Book
 0001 2013-08-26 Practical OCaml
 0002 2013-08-26 Project templating
 0003 2013-09-29 Mega project list
+0004 2013-10-27 Rust tutorial
 ==== ========== ========================================================
