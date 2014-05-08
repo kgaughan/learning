@@ -1,0 +1,7 @@
+Build with::
+
+    ocamlbuild calc.native
+
+To do:
+
+* Add function support.
