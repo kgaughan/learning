@@ -6,22 +6,19 @@
  * http://en.wikipedia.org/wiki/Mortgage_calculator
  *)
 
-open Printf;;
-
 let monthly_payment principal rate term =
   let monthly = rate /. 12.0 /. 100.0 in
-  (principal *. monthly) /. (1.0 -. (1.0 +. monthly) ** -. term);;
+  (principal *. monthly) /. (1.0 -. (1.0 +. monthly) ** -. term)
 
-let main () =
-  print_string "Principal? ";
-  let principal = read_float () in
-  print_string "Rate (percent)? ";
-  let rate = read_float () in
-  print_string "Term? ";
-  let term = floor (read_float ()) in
+let prompt_for prompt =
+  print_string prompt;
+  read_float ()
+
+let _ =
+  let principal = prompt_for "Principal? " in
+  let rate = prompt_for "Rate (percent)? " in
+  let term = floor (prompt_for "Term? ") in
   Printf.printf "Given a principal %0.2f at %.2f%% for %.0f months,\n"
                 principal rate term;
   Printf.printf "you would pay %0.2f per month.\n"
-                (monthly_payment principal rate term);;
-
-main ();;
+                (monthly_payment principal rate term)

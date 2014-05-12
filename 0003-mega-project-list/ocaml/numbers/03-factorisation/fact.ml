@@ -1,12 +1,10 @@
 (* Integer factorisation. *)
 
-open List;;
-
 let rec print_int_list =
-  List.iter (fun n -> print_int n; print_string " ");;
+  List.iter (fun n -> print_int n; print_string " ")
 
 let is_composite primes m =
-  List.exists (fun prime -> m mod prime == 0) primes;;
+  List.exists (fun prime -> m mod prime == 0) primes
 
 (* Simple prime sieve generating all the primes up to n. *)
 let sieve n =
@@ -16,7 +14,7 @@ let sieve n =
     else
       sieve_rec (if is_composite primes m then primes else (m :: primes))
                 (m + 1)
-  in sieve_rec [] 2;;
+  in sieve_rec [] 2
 
 (* Perform integer factorisation on `n`. *)
 let int_factors n =
@@ -27,12 +25,10 @@ let int_factors n =
                 else (int_fact t m)
     | _ -> []
   in
-  int_fact (sieve n) n;;
+  int_fact (sieve n) n
 
-let main () =
+let _ =
   let arg = int_of_string Sys.argv.(1) in
   print_int_list (int_factors arg);
   print_newline ();
-  exit 0;;
-
-main ();;
+  exit 0

@@ -1,7 +1,7 @@
 open Parser
 open Lexer
 
-let main () =
+let _ =
   try
     let buf = Lexing.from_channel stdin in
     while true do
@@ -11,6 +11,4 @@ let main () =
       flush stdout
     done
   with Lexer.Eof ->
-    exit 0;;
-
-main ();;
+    exit 0
