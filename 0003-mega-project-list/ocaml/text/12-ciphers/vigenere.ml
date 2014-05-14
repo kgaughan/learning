@@ -26,8 +26,8 @@ let _ =
   let specs = [
     ("-enc", Arg.Set enc, "Encode text (default)");
     ("-dec", Arg.Clear enc, "Decode text");
-    ("-key", Arg.String (fun s -> key := s), "Key for coding/decoding");
-    ("-text", Arg.String (fun s -> text := s), "Text to encode/decode");
+    ("-key", Arg.Set_string key, "Key for coding/decoding");
+    ("-text", Arg.Set_string text, "Text to encode/decode");
   ] in
   Arg.parse specs (fun x -> raise (Arg.Bad ("Bad argument : " ^ x))) usage;
   let recta = recta (if !enc then encrypt else decrypt) in
