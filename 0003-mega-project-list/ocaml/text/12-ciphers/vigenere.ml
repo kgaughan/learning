@@ -19,11 +19,16 @@ let cipher recta key text =
   Buffer.contents buf
 
 let _ =
-  let recta =
-    match Sys.argv.(1) with
-    | "enc" -> recta encrypt
-    | "dec" -> recta decrypt
-    | _ -> exit 1 in
-  let key = Sys.argv.(2) in
-  let text = Sys.argv.(3) in
-  print_endline (cipher recta key text)
+  let enc = ref true in
+  let key = ref "" in
+  let text = ref "" in
+  let usage = "Usage: vigenere [-enc|-dec] [-key string] [-text string]" in
+  let specs = [
+    ("-enc", Arg.Set enc, "Encode text (default)");
+    ("-dec", Arg.Clear enc, "Decode text");
+    ("-key", Arg.String (fun s -> key := s), "Key for coding/decoding");
+    ("-text", Arg.String (fun s -> text := s), "Text to encode/decode");
+  ] in
+  Arg.parse specs (fun x -> raise (Arg.Bad ("Bad argument : " ^ x))) usage;
+  let recta = recta (if !enc then encrypt else decrypt) in
+  print_endline (cipher recta !key !text)
