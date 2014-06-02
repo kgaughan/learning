@@ -17,4 +17,5 @@ ID   Date       Book
 0004 2013-10-27 Rust tutorial
 0006 2014-05-01 Rust by example
 0007 2014-05-04 Tour of Go
+0008 2014-06-02 99 Problems (solved) in OCaml
 ==== ========== ========================================================
