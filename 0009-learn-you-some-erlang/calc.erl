@@ -12,8 +12,8 @@ rpn("/", [N1, N2|S]) -> [N2 / N1|S];
 rpn("^", [N1, N2|S]) -> [math:pow(N2, N1)|S];
 rpn("ln", [N|S])     -> [math:log(N)|S];
 rpn("log10", [N|S])  -> [math:log10(N)|S];
-rpn("sum", S)        -> [lists:foldl(fun(N, Acc) -> N + Acc end, 0, S)];
-rpn("prod", S)       -> [lists:foldl(fun(N, Acc) -> N * Acc end, 1, S)];
+rpn("sum", S)        -> [lists:sum(S)];
+rpn("prod", S)       -> [lists:foldl(fun erlang:'*'/2, 1, S)];
 rpn(X, S)            -> [read(X)|S].
 
 read(N) ->

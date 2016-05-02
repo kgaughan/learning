@@ -1,9 +1,10 @@
-objects:=$(patsubst %.erl,%.beam,$(wildcard *.erl))
+SRC := $(wildcard *.erl)
+OBJ := $(SRC:.erl=.beam)
 
-all: $(objects)
+all: $(OBJ)
 
 clean:
-	rm -f $(objects)
+	rm -f $(OBJ)
 
 %.beam: %.erl
 	erlc $^
