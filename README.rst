@@ -18,4 +18,5 @@ ID   Date       Book
 0006 2014-05-01 Rust by example
 0007 2014-05-04 Tour of Go
 0008 2014-06-02 99 Problems (solved) in OCaml
+0009 2016-05-02 Learn you some Erlang
 ==== ========== ========================================================
