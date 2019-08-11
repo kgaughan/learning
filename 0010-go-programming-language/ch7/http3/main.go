@@ -2,9 +2,32 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 )
+
+var listTemplate = template.Must(template.New("list").Parse(`<!DOCTYPE html>
+<html>
+	<head>
+		<title>Price list</title>
+	</head>
+	<body>
+		<table>
+			<tr>
+				<th>Item</th>
+				<th>Price</th>
+			</tr>
+			{{- range $item, $price := . }}
+			<tr>
+				<td>{{ $item }}</td>
+				<td>{{ $price }}</td>
+			</tr>
+			{{- end }}
+		</table>
+	</body>
+</html>
+`))
 
 func main() {
 	db := database{"shoes": 50, "socks": 5}
@@ -23,10 +46,9 @@ func (d dollars) String() string {
 type database map[string]dollars
 
 func (db database) list(w http.ResponseWriter, req *http.Request) {
-	for item, price := range db {
-		fmt.Fprintf(w, "%s: %s\n", item, price)
+	if err := listTemplate.Execute(w, db); err != nil {
+		log.Fatal(err)
 	}
-
 }
 
 func (db database) price(w http.ResponseWriter, req *http.Request) {
