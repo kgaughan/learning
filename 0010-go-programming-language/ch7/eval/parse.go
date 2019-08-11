@@ -43,6 +43,8 @@ func (lex *lexer) describe() string {
 
 func precedence(op rune) int {
 	switch op {
+	case '^', '¬':
+		return 3
 	case '*', '/':
 		return 2
 	case '+', '-':

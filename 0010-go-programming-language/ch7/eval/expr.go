@@ -78,7 +78,7 @@ func (u unary) String() string {
 
 // A binary represents a binary operator expression, e.g. 'x+y'
 type binary struct {
-	op   rune // one of '+', '-', '*', '/'
+	op   rune // one of '+', '-', '*', '/', '¬', '^'
 	x, y Expr
 }
 
@@ -94,6 +94,16 @@ func (b binary) Eval(env Env) float64 {
 		return x * y
 	case '/':
 		return x / y
+	case '¬':
+		if x > y {
+			return y
+		}
+		return x
+	case '^':
+		if x > y {
+			return x
+		}
+		return y
 	}
 	panic(fmt.Sprintf("unsupported binary operator: %q", b.op))
 }
