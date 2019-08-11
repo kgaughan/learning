@@ -14,6 +14,8 @@ type Expr interface {
 
 	// Check reports errors in this Expr and adds its Vars to the set
 	Check(vars map[Var]bool) error
+
+	String() string
 }
 
 // A Var identifies a variable, e.g. 'x'
@@ -28,6 +30,10 @@ func (v Var) Check(vars map[Var]bool) error {
 	return nil
 }
 
+func (v Var) String() string {
+	return string(v)
+}
+
 // A literal is a numeric constant, e.g. 3.141.
 type literal float64
 
@@ -37,6 +43,10 @@ func (l literal) Eval(_ Env) float64 {
 
 func (literal) Check(vars map[Var]bool) error {
 	return nil
+}
+
+func (l literal) String() string {
+	return fmt.Sprintf("%.6g", float64(l))
 }
 
 // A unary represents a unary operator expression, e.g. '-x'
@@ -60,6 +70,10 @@ func (u unary) Check(vars map[Var]bool) error {
 		return fmt.Errorf("unexpected unary op %q", u.op)
 	}
 	return u.x.Check(vars)
+}
+
+func (u unary) String() string {
+	return fmt.Sprintf("%c%v", u.op, u.x)
 }
 
 // A binary represents a binary operator expression, e.g. 'x+y'
@@ -92,6 +106,10 @@ func (b binary) Check(vars map[Var]bool) error {
 		return err
 	}
 	return b.y.Check(vars)
+}
+
+func (b binary) String() string {
+	return fmt.Sprintf("(%v %c %v)", b.x, b.op, b.y)
 }
 
 // A call represents a function call expression, e.g. 'sin(x)'
@@ -133,4 +151,15 @@ func (c call) Check(vars map[Var]bool) error {
 		}
 	}
 	return nil
+}
+
+func (c call) String() string {
+	var builder strings.Builder
+	for i, arg := range c.args {
+		if i > 0 {
+			builder.WriteString(", ")
+		}
+		builder.WriteString(arg.String())
+	}
+	return fmt.Sprintf("%s(%s)", c.fn, builder.String())
 }
