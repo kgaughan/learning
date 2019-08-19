@@ -1,22 +1,23 @@
 // Package bank provides a concurrency-safe bank with one account.
 package bank
 
+import "sync"
+
 var (
-	sema    = make(chan struct{}, 1) // a binary semaphore guarding balance
+	mu      sync.Mutex // guards balance
 	balance int
 )
 
 func Deposit(amount int) {
-	sema <- struct{}{} // acquire token
+	mu.Lock()
+	defer mu.Unlock()
+
 	balance += amount
-	<-sema // release token
 }
 
 func Withdraw(amount int) bool {
-	sema <- struct{}{} // acquire token
-	defer func() {
-		<-sema // release token
-	}()
+	mu.Lock()
+	defer mu.Unlock()
 
 	if balance >= amount {
 		balance -= amount
@@ -26,8 +27,8 @@ func Withdraw(amount int) bool {
 }
 
 func Balance() int {
-	sema <- struct{}{} // acquire token
-	b := balance
-	<-sema // release token
-	return b
+	mu.Lock()
+	defer mu.Unlock()
+
+	return balance
 }
