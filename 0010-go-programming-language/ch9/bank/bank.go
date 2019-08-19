@@ -8,6 +8,15 @@ func Deposit(amount int) {
 	deposits <- amount
 }
 
+func Withdraw(amount int) bool {
+	balance := Balance()
+	if balance >= amount {
+		deposits <- -amount
+		return true
+	}
+	return false
+}
+
 func Balance() int {
 	return <-balances
 }
