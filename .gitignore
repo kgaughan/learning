@@ -3,3 +3,7 @@ repos/
 target/
 .*.*sw?
 *~
+*.log
+*.cache
+*.cmo
+*.cmi
