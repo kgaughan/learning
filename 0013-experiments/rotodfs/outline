@@ -1,0 +1,8 @@
+RotoDFS
+=======
+
+RotoFS is a distributed file store. It distributes files over a number of
+nodes. It uses consistent hashing to distribute files over multiple
+neighbouring nodes.
+
+When a node is added to a cluster, it contacts an existing 
