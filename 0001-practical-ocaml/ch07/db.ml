@@ -1,7 +1,7 @@
 (*
- * db.ocaml
+ * db.ml
  *
- * Financial database from Chapter 5 of Practical OCaml
+ * Financial database from Chapter 5 & 7 of Practical OCaml
  *)
 
 open Hashtbl;;
@@ -138,6 +138,8 @@ let accounts_holding symb accdb =
                              else
                                z)
                accdb [];;
+
+(* Start of code from chapter 7 *)
 
 let print_position pos =
   print_string "Holding: ";

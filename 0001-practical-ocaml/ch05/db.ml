@@ -1,5 +1,5 @@
 (*
- * db.ocaml
+ * db.ml
  *
  * Financial database from Chapter 5 of Practical OCaml
  *)
