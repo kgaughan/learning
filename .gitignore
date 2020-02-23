@@ -7,3 +7,4 @@ target/
 *.cache
 *.cm[oi]
 a.out
+docs/
