@@ -5,6 +5,5 @@ target/
 *~
 *.log
 *.cache
-*.cmo
-*.cmi
+*.cm[oi]
 a.out

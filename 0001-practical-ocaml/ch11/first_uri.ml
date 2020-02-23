@@ -35,6 +35,22 @@ let trans_mailto c =
   | '&' -> "_"
   | _   -> String.make 1 c
 
+let trans_file_rot13 c =
+  match c with
+  | 'a' .. 'z' ->
+      let b = (Char.code c) + 13 in
+      if b > 122 then
+        String.make 1 (Char.chr (b - 26))
+      else
+        String.make 1 (Char.chr b)
+  | 'A' .. 'Z' ->
+      let b = (Char.code c) + 13 in
+      if b > 90 then
+        String.make 1 (Char.chr (b - 26))
+      else
+        String.make 1 (Char.chr b)
+  | _ -> String.make 1 c
+
 let get_error x =
   try
     List.assoc x errors
