@@ -8,3 +8,5 @@ target/
 *.cm[oi]
 a.out
 docs/
+_build/
+*.native
