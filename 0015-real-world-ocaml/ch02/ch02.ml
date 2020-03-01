@@ -1,5 +1,7 @@
+open Base
+
 let area_of_ring inner_radius outer_radius =
-  let pi = acos (-1.) in
+  let pi = Float.acos (-1.) in
   let area_of_circle r = pi *. r *. r in
   area_of_circle outer_radius -. area_of_circle inner_radius
 
@@ -34,7 +36,7 @@ let some_or_zero = function
   | None -> 0
 
 let ratio ~num ~denom =
-  float num /. float denom
+  Float.of_int num /. Float.of_int denom
 
 (* optional arguments with boilerplace *)
 let concat ?sep x y =

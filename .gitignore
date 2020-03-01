@@ -10,3 +10,4 @@ a.out
 docs/
 _build/
 *.native
+*.byte
