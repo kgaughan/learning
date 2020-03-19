@@ -19,35 +19,59 @@ class Item:
         )
 
 
-def bound(n, minimum, maximum):
-    return max(min(n, maximum), minimum)
+def bound(n):
+    return max(min(n, 50), 0)
+
+
+def update_ordinary(item):
+    item.sell_in -= 1
+    quality = (item.quality - 2) if item.sell_in < 0 else (item.quality - 1)
+    item.quality = bound(quality)
+
+
+def update_legendary(_item):
+    pass
+
+
+def update_brie(item):
+    item.sell_in -= 1
+    item.quality = bound(item.quality + 1)
+
+
+def update_backstage_passes(item):
+    item.sell_in -= 1
+    quality = item.quality
+    if item.sell_in > 10:
+        quality += 1
+    elif item.sell_in > 5:
+        quality += 2
+    elif item.sell_in > 0:
+        quality += 3
+    else:
+        quality = 0
+    item.quality = bound(quality)
+
+
+def update_conjured(item):
+    item.sell_in -= 1
+    item.quality = bound(item.quality - 2)
+
+
+METHODS = [
+    (lambda item: item.name == "Sulfuras, Hand of Ragnaros", update_legendary),
+    (lambda item: item.name == "Aged Brie", update_brie),
+    (lambda item: item.name.startswith("Backstage passes"), update_backstage_passes),
+    (lambda item: item.name.startswith("Conjured"), update_conjured),
+    (lambda _: True, update_ordinary),
+]
 
 
 def update(items):
     for item in items:
-        if item.name == "Sulfuras, Hand of Ragnaros":
-            continue
-
-        item.sell_in -= 1
-
-        quality = item.quality
-        if item.name == "Aged Brie":
-            quality += 1
-        elif item.name.startswith("Backstage passes"):
-            if item.sell_in > 10:
-                quality += 1
-            elif item.sell_in > 5:
-                quality += 2
-            elif item.sell_in > 0:
-                quality += 3
-            else:
-                quality = 0
-        elif item.sell_in < 0 or item.name.startswith("Conjured"):
-            quality -= 2
-        else:
-            quality -= 1
-
-        item.quality = bound(quality, 0, 50)
+        for detector, updater in METHODS:
+            if detector(item):
+                updater(item)
+                break
 
 
 def main():
