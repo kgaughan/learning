@@ -1,3 +1,15 @@
+================
+Gilded Rose Kata
+================
+
+To run the test suite::
+
+    python3 -m unittest
+
+To run the demo::
+
+    python3 -m gildedrose
+
 Kata text
 =========
 

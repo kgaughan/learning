@@ -19,17 +19,6 @@ class Item:
         )
 
 
-def make_items():
-    return [
-        Item("+5 Dexterity Vest", 10, 20),
-        Item("Aged Brie", 2, 0),
-        Item("Elixir of the Mongoose", 5, 7),
-        Item("Sulfuras, Hand of Ragnaros", 0, 80),
-        Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
-        Item("Conjured Mana Cake", 3, 6),
-    ]
-
-
 def bound(n, minimum, maximum):
     return max(min(n, maximum), minimum)
 
@@ -62,7 +51,14 @@ def update(items):
 
 
 def main():
-    items = make_items()
+    items = [
+        Item("+5 Dexterity Vest", 10, 20),
+        Item("Aged Brie", 2, 0),
+        Item("Elixir of the Mongoose", 5, 7),
+        Item("Sulfuras, Hand of Ragnaros", 0, 80),
+        Item("Backstage passes to a TAFKAL80ETC concert", 15, 20),
+        Item("Conjured Mana Cake", 3, 6),
+    ]
     print("Initial values:")
     while any(item.sell_in > 0 for item in items):
         update(items)
