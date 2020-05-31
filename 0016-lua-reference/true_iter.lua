@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function allwords(f)
   -- repeat for each line in the file
   for l in io.lines() do

@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 producer = coroutine.create(function()
   while true do
     local x = io.read() -- produce new value

@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function Set(list)
   local set = {}
   for _, l in ipairs(list) do

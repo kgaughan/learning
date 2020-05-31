@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 StringBuffer = {}
 
 function StringBuffer:new()

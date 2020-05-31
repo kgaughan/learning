@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function all_words()
   local line = io.read() -- current line
   local pos = 1          -- current position in the line

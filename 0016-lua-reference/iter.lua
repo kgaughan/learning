@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function list_iter(t)
   local i = 0
   local n = #t

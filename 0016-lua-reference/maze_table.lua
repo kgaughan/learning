@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 maze = {
   room1 = {
     south = "room3",

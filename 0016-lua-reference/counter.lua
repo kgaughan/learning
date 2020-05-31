@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function new_counter()
   local i = 0
   return function()

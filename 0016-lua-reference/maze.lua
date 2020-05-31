@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function room1()
   local move = io.read()
   if move == "south" then

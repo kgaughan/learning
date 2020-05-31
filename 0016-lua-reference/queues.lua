@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 --
 -- This version makes it a proper class
 --

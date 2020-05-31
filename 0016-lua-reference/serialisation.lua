@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function serialise(o, indent)
   indent = indent or ""
   if type(o) == "number" then

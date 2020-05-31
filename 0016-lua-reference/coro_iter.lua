@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 -- generate all the permutation of `a` of the first `n` elements
 function gen_perm(a, n)
   n = n or #a -- default `n` to the length of `a` if unspecified

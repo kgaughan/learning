@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function all_words_iterator(state)
   -- repeat while there are lines
   while state.line do

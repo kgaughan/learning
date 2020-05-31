@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 t = {} -- original table (created somewhere)
 
 -- keep a private access to original table

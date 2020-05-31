@@ -1,3 +1,5 @@
+#!/usr/bin/env lua
+
 function read_only(t)
   local proxy = {}
   local mt = {
