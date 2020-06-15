@@ -1,5 +1,11 @@
-local P = {}
-complex = P -- package name
+local P = {} -- package
+
+-- _REQUIREDNAME comes from the require() function when it loads a package
+if _REQUIREDNAME == nil then
+  complex = P -- package name
+else
+  _G[_REQUIREDNAME] = P
+end
 
 function P.new(r, i)
   return {
@@ -15,6 +21,7 @@ local function check_type(c)
   if not (type(c) == "table" and tonumber(c.r) and tonumber(c.i)) then
     error("bad complex number", 3)
   end
+end
 
 function P.add(c1, c2)
   check_type(c1)
@@ -33,7 +40,7 @@ function P.mul(c1, c2)
   check_type(c2)
   return P.new(
     c1.r * c2.r - c1.i * c2.i,
-    c1.r * c2.i + c1.i * c2.r,
+    c1.r * c2.i + c1.i * c2.r
   )
 end
 
@@ -43,4 +50,4 @@ function P.inv(c)
   return P.new(c.r / n, -c.i / n)
 end
 
-return complex
+return P
