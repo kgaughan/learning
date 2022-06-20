@@ -4,7 +4,7 @@ version = "0.1.0"
 authors = ["Keith Gaughan <k@stereochro.me>"]
 
 [dependencies]
-iron = "0.5.1"
-mime = "0.2.3"
-router = "0.5.1"
-urlencoded = "0.5.0"
+iron = "0.6.1"
+mime = "0.2.6"
+router = "0.6.0"
+urlencoded = "0.6.0"

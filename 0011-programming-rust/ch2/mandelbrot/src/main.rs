@@ -2,11 +2,9 @@ extern crate crossbeam;
 extern crate image;
 extern crate num;
 
-use std::fs::File;
 use std::io::Write;
 use std::str::FromStr;
 use image::ColorType;
-use image::png::PNGEncoder;
 use num::Complex;
 
 /// Try to determine if `c` is in the Mandelbrot set, using at most `limit`
@@ -135,12 +133,10 @@ fn render(pixels: &mut[u8],
 fn write_image(filename: &str, pixels: &[u8], bounds: (usize, usize))
     -> Result<(), std::io::Error>
 {
-    let output = File::create(filename)?;
-
-    let encoder = PNGEncoder::new(output);
-    encoder.encode(&pixels,
-                   bounds.0 as u32, bounds.1 as u32,
-                   ColorType::Gray(8))?;
+    image::save_buffer(filename,
+                       &pixels,
+                       bounds.0 as u32, bounds.1 as u32,
+                       ColorType::L8).unwrap();
     Ok(())
 }
 
@@ -183,11 +179,11 @@ fn main() {
                                                      upper_left, lower_right);
                 let band_lower_right = pixel_to_point(bounds, (bounds.0, top + height),
                                                       upper_left, lower_right);
-                spawner.spawn(move || {
+                spawner.spawn(move |_| {
                     render(band, band_bounds, band_upper_left, band_lower_right);
                 });
             }
-        });
+        }).unwrap();
     }
 
     write_image(&args[1], &pixels, bounds)

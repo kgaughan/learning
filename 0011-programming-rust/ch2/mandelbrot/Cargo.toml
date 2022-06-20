@@ -4,6 +4,6 @@ version = "0.1.0"
 authors = ["Keith Gaughan <k@stereochro.me>"]
 
 [dependencies]
-crossbeam = "0.4.1"
-image = "0.13.0"
-num = "0.1.27"
+crossbeam = "0.8.1"
+image = "0.24.2"
+num = "0.4.0"
