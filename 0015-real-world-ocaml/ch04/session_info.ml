@@ -1,4 +1,5 @@
 open Core
+open Base.Poly
 
 module type ID = sig
   type t
@@ -34,7 +35,7 @@ module Interval = struct
     | Empty
 
   let create low high =
-    if hight < low then
+    if high < low then
       Empty
     else
       Interval (low, high)
@@ -54,5 +55,3 @@ let rec intersperse lst el =
   match lst with
   | [] | [_] -> lst
   | x :: y :: tl -> x :: el :: intersperse (y :: tl) el
-
-

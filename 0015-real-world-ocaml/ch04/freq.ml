@@ -1,4 +1,4 @@
-open Base
+open Core
 open Stdio
 
 (** Find how often each line of `chan` occurs *)
