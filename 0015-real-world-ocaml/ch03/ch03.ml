@@ -9,12 +9,12 @@ let rec drop_value to_drop = function
   | [] -> []
   | hd :: tl ->
       let new_tl = drop_value to_drop tl in
-      if hd = to_drop then new_tl else (hd :: new_tl)
+      if hd = to_drop then new_tl else hd :: new_tl
 
 let rec drop_zero = function
   | [] -> []
   | 0 :: tl -> drop_zero tl
-  | hd :: tl -> hd :: (drop_zero tl)
+  | hd :: tl -> hd :: drop_zero tl
 
 let plus_one_match = function
   | 0 -> 1
@@ -43,7 +43,7 @@ let render_table header rows =
   let widths = max_widths header rows in
   let rendered_lines =
     (render_row header widths) ::
-    render_separator widths ::
+    (render_separator widths) ::
     List.map rows ~f:(fun row -> render_row row widths) in
   String.concat ~sep:"\n" rendered_lines
 

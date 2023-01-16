@@ -33,8 +33,8 @@ let log_entry maybe_time message =
 *)
 
 type point2d = {
-  x: float;
-  y: float;
+  x : float;
+  y : float;
 }
 
 let magnitude { x = x_pos; y = y_pos } =
@@ -44,19 +44,19 @@ let distance1 v1 v2 =
   magnitude { x = v1.x -. v2.x; y = v1.y -. v2.y }
 
 type circle_desc = {
-  centre: point2d;
-  radius: float;
+  centre : point2d;
+  radius : float;
 }
 
 type rect_desc = {
-  lower_left: point2d;
-  width: float;
-  height: float;
+  lower_left : point2d;
+  width : float;
+  height:  float;
 }
 
 type segment_desc = {
-  endpoint1: point2d;
-  endpoint2: point2d;
+  endpoint1 : point2d;
+  endpoint2 : point2d;
 }
 
 type scene_element =
@@ -68,25 +68,27 @@ let is_inside_scene_element point = function
   | Circle { centre; radius } ->
       (distance1 centre point) < radius
   | Rect { lower_left; width; height } ->
-      point.x > lower_left.x && point.x < lower_left.x +. width &&
-      point.y > lower_left.y && point.y < lower_left.y +. height
+      point.x > lower_left.x
+      && point.x < lower_left.x +. width
+      && point.y > lower_left.y
+      && point.y < lower_left.y +. height
   | Segment { endpoint1; endpoint2 } -> false
 
 let is_inside_scene point =
   List.exists (fun el -> is_inside_scene_element point el)
 
 type running_sum = {
-  mutable sum: float;
-  mutable sum_sq: float; (* sum of squares *)
-  mutable samples: int;
+  mutable sum : float;
+  mutable sum_sq : float; (* sum of squares *)
+  mutable samples : int;
 }
 
-let mean rsum =
-  rsum.sum /. float rsum.samples
+let mean rsum = rsum.sum /. float rsum.samples
 
 let stdev rsum =
-  sqrt (rsum.sum_sq /. float rsum.samples -.
-        (rsum.sum /. float rsum.samples) ** 2.)
+  sqrt
+    ((rsum.sum_sq /. float rsum.samples)
+    -. ((rsum.sum /. float rsum.samples) ** 2.))
 
 let create () = {
   sum = 0.;

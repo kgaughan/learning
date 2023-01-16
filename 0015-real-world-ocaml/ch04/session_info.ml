@@ -4,9 +4,9 @@ open Base.Poly
 module type ID = sig
   type t
 
-  val of_string: string -> t
+  val of_string : string -> t
 
-  val to_string: t -> string
+  val to_string : t -> string
 end
 
 module String_id = struct
@@ -22,9 +22,9 @@ module Username : ID = String_id
 module Hostname : ID = String_id
 
 type session_info = {
-  user: Username.t;
-  host: Hostname.t;
-  when_started: Time.t;
+  user : Username.t;
+  host : Hostname.t;
+  when_started : Time.t;
 }
 
 let sessions_have_same_user s1 s2 = s1.user = s2.user
@@ -47,8 +47,7 @@ module Extended_interval = struct
   let contains t x =
     match t with
     | Empty -> false
-    | Interval (low, high) ->
-        x >= low && x <= high
+    | Interval (low, high) -> x >= low && x <= high
 end
 
 let rec intersperse lst el =

@@ -1,16 +1,16 @@
 open Core
 
 type host_info = {
-  hostname: string;
-  os_name: string;
-  cpu_arch: string;
-  os_release: string;
-  timestamp: Time.t;
+  hostname : string;
+  os_name : string;
+  cpu_arch : string;
+  os_release : string;
+  timestamp : Time.t;
 }
 
 type 'a timestamped = {
-  item: 'a;
-  time: Time.t;
+  item : 'a;
+  time : Time.t;
 }
 
 let first_timestamped lst =
@@ -31,27 +31,27 @@ let create_host_info ~hostname ~os_name ~cpu_arch ~os_release = {
 
 module Log_entry = struct
   type t = {
-    session_id: string;
-    time: Time.t;
-    important: bool;
-    message: string;
+    session_id : string;
+    time : Time.t;
+    important : bool;
+    message : string;
   }
 end
 
 module Heartbeat = struct
   type t = {
-    session_id: string;
-    time: Time.t;
-    status_message: string;
+    session_id : string;
+    time : Time.t;
+    status_message : string;
   }
 end
 
 module Logon = struct
   type t = {
-    session_id: string;
-    time: Time.t;
-    user: string;
-    credentials: string;
+    session_id : string;
+    time : Time.t;
+    user : string;
+    credentials : string;
   }
   [@@deriving fields]
 end
@@ -69,16 +69,15 @@ let message_to_string { Log_entry.important; message; _ } =
   else
     message
 
-let is_important t =
-  t.Log_entry.important
+let is_important t = t.Log_entry.important
 
 type client_info = {
-  addr: Unix.Inet_addr.t;
-  port: int;
-  user: string;
-  credentials: string;
-  last_heartbeat_time: Time.t;
-  last_heartbeat_status: string;
+  addr : Unix.Inet_addr.t;
+  port : int;
+  user : string;
+  credentials : string;
+  last_heartbeat_time : Time.t;
+  last_heartbeat_status : string;
 }
 
 let register_heartbeat t hb = {
@@ -96,25 +95,24 @@ let register_heartbeat1 t hb = {
 }
 
 type client_info_mut = {
-  addr: Unix.Inet_addr.t;
-  port: int;
-  user: string;
-  credentials: string;
-  mutable last_heartbeat_time: Time.t;
-  mutable last_heartbeat_status: string;
+  addr : Unix.Inet_addr.t;
+  port : int;
+  user : string;
+  credentials : string;
+  mutable last_heartbeat_time : Time.t;
+  mutable last_heartbeat_status : string;
 }
 
 let register_heartbeat_mut t hb =
   t.last_heartbeat_time <- hb.Heartbeat.time;
   t.last_heartbeat_status <- hb.Heartbeat.status_message
 
-let get_users logins =
-  List.dedup_and_sort (List.map logins ~f:Logon.user)
+let get_users logins = List.dedup_and_sort (List.map logins ~f:Logon.user)
 
 let show_field field to_string record =
   let name = Field.name field in
   let field_string = to_string (Field.get field record) in
-  name ^ ": " ^  field_string
+  name ^ ": " ^ field_string
 
 let print_logon logon =
   let print to_string field =
