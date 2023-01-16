@@ -1,4 +1,4 @@
-open Core
+open Printf
 
 type basic_colour =
   | Black

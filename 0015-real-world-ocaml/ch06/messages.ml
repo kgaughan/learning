@@ -38,17 +38,17 @@ let messages_for_user user messages =
       ~f:(fun ((messages, user_sessions) as acc)
               ((common, details) as message) ->
             let session_id = common.Common.session_id in
-              match details with
-              | Logon m ->
-                  if m.Logon.user = user then
-                    (message :: messages, Set.add user_sessions session_id)
-                  else
-                    acc
-              | Heartbeat _ | Log_entry _ ->
-                  if Set.mem user_sessions session_id then
-                    (message :: messages, user_sessions)
-                  else
-                    acc)
+            match details with
+            | Logon m ->
+                if m.Logon.user = user then
+                  (message :: messages, Set.add user_sessions session_id)
+                else
+                  acc
+            | Heartbeat _ | Log_entry _ ->
+                if Set.mem user_sessions session_id then
+                  (message :: messages, user_sessions)
+                else
+                  acc)
   in List.rev user_messages
 
 let handle_message server_state (common, details) =
