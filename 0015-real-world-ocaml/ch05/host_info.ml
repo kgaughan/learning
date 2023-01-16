@@ -1,4 +1,5 @@
 open Core
+open Printf
 
 type host_info = {
   hostname : string;
@@ -16,10 +17,8 @@ type 'a timestamped = {
 let first_timestamped lst =
   List.reduce lst ~f:(fun a b -> if a.time < b.time then a else b)
 
-(*
 let host_info_to_string { hostname = h; os_name = os; cpu_arch = c; timestamp = ts; _ } =
   sprintf "%s (%s / %s, on %s)" h os c (Time.to_sec_string ts)
-*)
 
 let create_host_info ~hostname ~os_name ~cpu_arch ~os_release = {
   os_name;
@@ -80,6 +79,7 @@ type client_info = {
   last_heartbeat_status : string;
 }
 
+(* Verbosely copying across fields. *)
 let register_heartbeat t hb = {
   addr = t.addr;
   port = t.port;
@@ -89,6 +89,8 @@ let register_heartbeat t hb = {
   last_heartbeat_status = hb.Heartbeat.status_message;
 }
 
+(* Functional update: copy everything from t to the new record that isn't
+   explicitly set after the 'with' keyword *)
 let register_heartbeat1 t hb = {
   t with last_heartbeat_time = hb.Heartbeat.time;
          last_heartbeat_status = hb.Heartbeat.status_message;
@@ -103,6 +105,7 @@ type client_info_mut = {
   mutable last_heartbeat_status : string;
 }
 
+(* This is an inplace update to 't' *)
 let register_heartbeat_mut t hb =
   t.last_heartbeat_time <- hb.Heartbeat.time;
   t.last_heartbeat_status <- hb.Heartbeat.status_message
