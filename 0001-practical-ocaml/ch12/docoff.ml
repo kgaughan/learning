@@ -35,7 +35,7 @@ sig
   (** baz will show up in the docs *)
   (* this comment is in the source but not the docs *)
   val baz: float -> string -> char
-end;;
+end
 
 (** {1 This is a section header}
     {b Here is some bold text} with examples of
@@ -50,7 +50,7 @@ end;;
     [val source_code_style: string -> int]
   
     Or preformatted like this:
-    {[ let source_code_string x = String.length x;; ]}
+    {[ let source_code_string x = String.length x ]}
   
     {v Verbatim text can be added, though you
 may still have to escape certain text in verbatim blocks. v}

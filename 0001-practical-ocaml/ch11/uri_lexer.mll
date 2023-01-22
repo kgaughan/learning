@@ -15,8 +15,8 @@ rule token = parse
     '<' '>' '|' '{' '}' '[' ']' '!' '.' ',']+ as st) { STRING(st) }
 
 {
-  let lb = Lexing.from_string "http://www.slashdot.org/index.html";;
+  let lb = Lexing.from_string "http://www.slashdot.org/index.html"
   let _ =
   let res = Uri_parser.main token lb in
-  Printf.printf "[%s %s]" (fst res) (snd res);;
+  Printf.printf "[%s %s]" (fst res) (snd res)
 }

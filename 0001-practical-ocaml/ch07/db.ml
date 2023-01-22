@@ -4,20 +4,20 @@
  * Financial database from Chapter 5 & 7 of Practical OCaml
  *)
 
-open Hashtbl;;
-open Marshal;;
+open Hashtbl
+open Marshal
 
 type position = {
   symbol: string;
   holding: int;
   pprice: float;
-};;
+}
 
 type account = {
   name: string;
   max_ind_holding: float;
   pos: position list;
-};;
+}
 
 let cur_prices = [
   ("IBM", 82.48);
@@ -45,7 +45,7 @@ let cur_prices = [
   ("DYN", 4.83);
   ("FAST", 46.64);
   ("FDX", 117.1);
-];;
+]
 
 let gen_account acdb accname max_holding init_pos = 
   if (Hashtbl.mem acdb accname) then
@@ -53,13 +53,13 @@ let gen_account acdb accname max_holding init_pos =
   else
     Hashtbl.add acdb accname {name = accname;
                               max_ind_holding = max_holding;
-                              pos = init_pos};;
+                              pos = init_pos}
 
 let account_buy (symb, price) quant acc =
   {acc with pos =
     ({symbol = symb;
       holding = quant;
-      pprice = price} :: acc.pos)};;
+      pprice = price} :: acc.pos)}
 
 let account_sell (symb, price) acc =
   let rec seller sym prc pos_list soldq soldv newposlst =
@@ -72,72 +72,72 @@ let account_sell (symb, price) acc =
                          newposlst
                 else
                   seller sym prc t soldq soldv (h :: newposlst)
-  in seller symb price acc.pos 0 0. [];;
+  in seller symb price acc.pos 0 0. []
 
 let buy db account_name (symbol_name, price) quantity =
   let acc = Hashtbl.find db account_name in
   Hashtbl.replace db account_name
-                  (account_buy (symbol_name, price) quantity acc);;
+                  (account_buy (symbol_name, price) quantity acc)
 
 let sell db account_name (symbol_name, price) =
   let acc = Hashtbl.find db account_name in
   let ((quant, profit), newacc) = account_sell (symbol_name, price) acc in
   Hashtbl.replace db account_name newacc;
-  (quant, profit);;
+  (quant, profit)
 
 let store_db accounts_db filename =
   let f = open_out_bin filename in
   Marshal.to_channel f accounts_db [];
-  close_out f;;
+  close_out f
 
 let load_db filename =
   let f = open_in_bin filename in
   let v = ((Marshal.from_channel f): (string, account) Hashtbl.t) in
   close_in f;
-  v;;
+  v
 
 let symbols_in_account acc =
-  List.map (fun x -> x.symbol) acc.pos;;
+  List.map (fun x -> x.symbol) acc.pos
 
 let value_at_purchase acc =
   List.fold_left (fun y x -> ((float_of_int x.holding) *. x.pprice) +. y)
-                 0. acc.pos;;
+                 0. acc.pos
 
 let current_value acc cur_prices =
   List.fold_left (fun y x -> ((float_of_int x.holding) *.
                               (List.assoc x.symbol cur_prices)) +. y)
-                 0. acc.pos;;
+                 0. acc.pos
 
 let profit_and_loss acc cur_prices =
-  (current_value acc cur_prices) -. (value_at_purchase acc);;
+  (current_value acc cur_prices) -. (value_at_purchase acc)
 
 let total_pandl accdb cur_prices =
   List.fold_left (+.) 0.
                  (Hashtbl.fold (fun x y z -> (profit_and_loss y cur_prices) :: z)
-                               accdb []);;
+                               accdb [])
 
 let percent_holding acc cur_prices =
   let curval = current_value acc cur_prices in
   List.map (fun x -> (x.symbol, (((float_of_int x.holding) *.
                                   (List.assoc x.symbol cur_prices)) /.
                                  curval)))
-           acc.pos;;
+           acc.pos
 
 let needs_rebal acc cur_prices =
   let percnt_hold = percent_holding acc cur_prices in
   List.filter (fun x -> (snd x) > acc.max_ind_holding)
-              percnt_hold;;
+              percnt_hold
 
 let contains_symbol symb acc =
   List.fold_left (fun x y -> if (x) then x else y) false
-                 (List.map (fun x -> x.symbol = symb) acc);;
+                 (List.map (fun x -> x.symbol = symb) acc)
 
 let accounts_holding symb accdb =
   Hashtbl.fold (fun x y z -> if (contains_symbol symb y.pos) then
                                (x :: z)
                              else
                                z)
-               accdb [];;
+               accdb []
 
 (* Start of code from chapter 7 *)
 
@@ -146,12 +146,12 @@ let print_position pos =
   print_int pos.holding;
   print_string (" " ^ pos.symbol ^ "@");
   print_float pos.pprice;
-  print_newline ();;
+  print_newline ()
 
 let print_account acct =
   print_string ("Account ID: " ^ acct.name);
   print_newline ();
-  List.iter print_position acct.pos;;
+  List.iter print_position acct.pos
 
 let summary_stats items =
   let total = List.fold_left (+.) 0. items in
@@ -161,23 +161,23 @@ let summary_stats items =
     sqrt ((List.fold_left (fun y n -> ((n -. mean) *. (n -. mean)) +. y)
                           0.
                           items) /. (float_of_int (List.length items))) in
-  total, mean, median, std_dev;;
+  total, mean, median, std_dev
 
 let rec top_n source acc counter =
   match source with
   | h :: t when (counter = 0) -> List.rev acc
   | h :: t when (counter > 0) -> top_n t (h :: acc) (counter - 1)
-  | _ -> assert false;;
+  | _ -> assert false
 
 let top_10 db new_prices =
   let lst = List.sort (fun (m, n) (x, y) -> compare y n)
                       (Hashtbl.fold (fun x y z -> ((x, profit_and_loss y new_prices) :: z)) db []) in
-  top_n lst [] 10;;
+  top_n lst [] 10
 
 let bottom_10 db new_prices =
   let lst = List.sort (fun (m, n) (x, y) -> compare n y)
                       (Hashtbl.fold (fun x y z -> ((x, profit_and_loss y new_prices) :: z)) db []) in
-  top_n lst [] 10;;
+  top_n lst [] 10
 
 let print_top_report title lst =
   let rec toprep buf items =
@@ -198,21 +198,21 @@ let print_top_report title lst =
   Buffer.add_string newbuf title;
   Buffer.add_string newbuf "\n------------------\n";
   Buffer.add_char newbuf '\n';
-  toprep newbuf lst;;
+  toprep newbuf lst
 
 let price_to_string (m, n) =
-  Printf.sprintf "%s %0.4f" m n;;
+  Printf.sprintf "%s %0.4f" m n
 
 let string_of_position pos =
-  Printf.sprintf "%s %i %0.4f" pos.symbol pos.holding pos.pprice;;
+  Printf.sprintf "%s %i %0.4f" pos.symbol pos.holding pos.pprice
 
 let price_from_string s =
-  Scanf.sscanf s "%s %f" (fun x y -> x, y);;
+  Scanf.sscanf s "%s %f" (fun x y -> x, y)
 
 let position_of_string s =
   Scanf.sscanf s "%s %i %0.4f" (fun x y z -> {symbol = x;
                                               holding = y;
-                                              pprice = z});;
+                                              pprice = z})
 
 let string_of_account acct =
   let rec build_pos poslist accum =
@@ -226,12 +226,12 @@ let string_of_account acct =
   Buffer.add_string temp_buf acct.name;
   Buffer.add_char temp_buf '|';
   Buffer.add_string temp_buf (string_of_float acct.max_ind_holding);
-  build_pos acct.pos temp_buf;;
+  build_pos acct.pos temp_buf
 
 let export_accounts db filename =
   let oc = open_out filename in
   Hashtbl.iter (fun key data -> Printf.fprintf oc "%s\n" (string_of_account data)) db;
-  close_out oc;;
+  close_out oc
 
 let account_of_string str =
   let rec build_pos sb accum =
@@ -257,7 +257,7 @@ let account_of_string str =
   let pslist = build_pos scan_buffer [] in
   {name = acc_name;
    max_ind_holding = mih;
-   pos = pslist};;
+   pos = pslist}
 
 let import_accounts dstore filename =
   let ic = open_in filename in
@@ -274,13 +274,13 @@ let import_accounts dstore filename =
   in
   let res = iaccts ic dstore in
   close_in ic;
-  res;;
+  res
 
 let rand_char () =
   let flip = Random.bool () in
   match flip with
   | true -> Char.chr ((Random.int 9) + 48)
-  | false -> Char.chr ((Random.int 26) + 97);;
+  | false -> Char.chr ((Random.int 26) + 97)
 
 let random_acct_name len =
   let rec ran indx str =
@@ -290,7 +290,7 @@ let random_acct_name len =
     | _ -> str.[indx] <- rand_char ();
            ran (indx - 1) str
   in
-  ran (len - 1) (String.create len);;
+  ran (len - 1) (String.create len)
 
 let rec gen_random_pos_list len accu price_list =
   match len with
@@ -299,16 +299,16 @@ let rec gen_random_pos_list len accu price_list =
            List.nth price_list (Random.int (List.length price_list)) in
          gen_random_pos_list (len - 1) ({symbol = sym;
                                          holding = (Random.int 1000);
-                                         pprice = price} :: accu) price_list;;
+                                         pprice = price} :: accu) price_list
 
 let gen_random_account current_prices =
   {name = (random_acct_name 5);
    max_ind_holding = ((Random.float 0.8) + 0.2);
-   pos = gen_random_pos_list ((Random.int 9) + 1) [] current_prices};;
+   pos = gen_random_pos_list ((Random.int 9) + 1) [] current_prices}
 
 let rec populate_db rand_cands store current_prices =
   match rand_cands with
   | 0 -> ()
   | _ -> let newacc = gen_random_account current_prices in
          Hashtbl.add store newacc.name newacc;
-         populate_db (rand_cands - 1) store current_prices;;
+         populate_db (rand_cands - 1) store current_prices

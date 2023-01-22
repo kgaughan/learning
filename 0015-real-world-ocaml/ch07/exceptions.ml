@@ -57,7 +57,7 @@ let load_reminders_idiomatic filename =
 let lookup_weight ~compute_weight alist key =
   match List.Assoc.find ~equal:(=) alist key with
   | None -> 0.
-  | Some data -> compute_weight data;;
+  | Some data -> compute_weight data
 
 let find alist key =
   Option.try_with (fun () -> find_exn alist key)

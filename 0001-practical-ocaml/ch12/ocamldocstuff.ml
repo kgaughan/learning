@@ -15,7 +15,7 @@
     [val source_code_style: string -> int]
   
     Or preformatted like this:
-    {[ let source_code_string x = String.length x;; ]}
+    {[ let source_code_string x = String.length x ]}
   
     {v Verbatim text can be added, though you
 may still have to escape certain text in verbatim blocks. v}
