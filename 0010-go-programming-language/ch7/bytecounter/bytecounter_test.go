@@ -1,7 +1,9 @@
 package bytecounter
 
-import "fmt"
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestByteCounter(t *testing.T) {
 	var c ByteCounter

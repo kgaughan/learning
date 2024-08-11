@@ -7,7 +7,7 @@ import (
 )
 
 func TestEcho(t *testing.T) {
-	var tests = []struct {
+	tests := []struct {
 		newline bool
 		sep     string
 		args    []string

@@ -1,7 +1,9 @@
 package ints
 
-import "bytes"
-import "fmt"
+import (
+	"bytes"
+	"fmt"
+)
 
 // An IntSet is a set of small non-negative integers.
 // Its zero value represents the empty set.

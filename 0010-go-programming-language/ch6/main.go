@@ -1,10 +1,14 @@
 package main
 
-import "fmt"
-import "image/color"
+import (
+	"fmt"
+	"image/color"
+)
 
-import "gopl.io/ch6/geometry"
-import "gopl.io/ch6/ints"
+import (
+	"gopl.io/ch6/geometry"
+	"gopl.io/ch6/ints"
+)
 
 func main() {
 	p := geometry.Point{1, 2}
@@ -36,8 +40,8 @@ func main() {
 
 	red := color.RGBA{255, 0, 0, 255}
 	blue := color.RGBA{0, 0, 255, 255}
-	var p2 = geometry.ColoredPoint{geometry.Point{1, 1}, red}
-	var q2 = geometry.ColoredPoint{geometry.Point{5, 4}, blue}
+	p2 := geometry.ColoredPoint{geometry.Point{1, 1}, red}
+	q2 := geometry.ColoredPoint{geometry.Point{5, 4}, blue}
 	fmt.Println(p2.Distance(q2.Point))
 	p2.ScaleBy(2)
 	q2.ScaleBy(2)

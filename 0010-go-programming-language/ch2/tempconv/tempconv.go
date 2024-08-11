@@ -2,8 +2,10 @@ package tempconv
 
 import "fmt"
 
-type Celsius float64
-type Fahrenheit float64
+type (
+	Celsius    float64
+	Fahrenheit float64
+)
 
 const (
 	AbsoluteZeroC Celsius = -273.15

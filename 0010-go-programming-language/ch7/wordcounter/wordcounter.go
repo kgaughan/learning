@@ -1,7 +1,9 @@
 package wordcounter
 
-import "bufio"
-import "bytes"
+import (
+	"bufio"
+	"bytes"
+)
 
 // WordCounter implements io.Writer and counts the words written to it.
 type WordCounter struct {
