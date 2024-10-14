@@ -16,17 +16,16 @@
 (***************************************************************)
 
 (** Our module type, Docoff, show the turning on and off of documentation processing *)
-module type Docoff =
-sig
+module type Docoff = sig
   (** document foo
       @author Joshua Smith
    *)
-  val foo: int -> int -> float
+  val foo : int -> int -> float
 
   (** document bar
       @deprecated This had to be deprecated in favour of baz
    *)
-  val bar: int -> unit
+  val bar : int -> unit
 
   (**/**)
   (** This will not show up *)
@@ -34,7 +33,7 @@ sig
 
   (** baz will show up in the docs *)
   (* this comment is in the source but not the docs *)
-  val baz: float -> string -> char
+  val baz : float -> string -> char
 end
 
 (** {1 This is a section header}

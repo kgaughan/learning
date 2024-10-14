@@ -23,5 +23,3 @@ may still have to escape certain text in verbatim blocks. v}
   
     We can also make L{_a}T{^e}X look (almost) correct.
  *)
-
-

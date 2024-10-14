@@ -1,14 +1,17 @@
-module Setofexceptions = Set.Make(struct type t = exn let compare = Pervasives.compare end)
+module Setofexceptions = Set.Make (struct
+  type t = exn
+
+  let compare = Pervasives.compare
+end)
 
 let find xval ht =
-  if (Hashtbl.mem ht xval) then
-    Hashtbl.find ht xval
-  else
-    (Hashtbl.add ht xval 0; 0)
+  if Hashtbl.mem ht xval then Hashtbl.find ht xval
+  else (
+    Hashtbl.add ht xval 0;
+    0)
 
 let betterfind xval ht =
-  try
-    Hashtbl.find ht xval
+  try Hashtbl.find ht xval
   with Not_found ->
     Hashtbl.add ht xval 0;
     0
@@ -35,9 +38,8 @@ let find_in token lst = List.find token lst
 
 let write_log_message filename message =
   let oc =
-    try
-      open_out_gen [Open_append] 0644 filename
-    with Sys_error n -> open_out_gen [Open_append; Open_creat] 0644 filename
+    try open_out_gen [ Open_append ] 0644 filename
+    with Sys_error n -> open_out_gen [ Open_append; Open_creat ] 0644 filename
   in
-    output oc message 0 (String.length message);
-    close_out oc
+  output oc message 0 (String.length message);
+  close_out oc
