@@ -1,18 +1,3 @@
-rule tokens = parse
-  ' ' { tokens lexbuf }
-| "the" { tokens lexbuf }
-| "and" { tokens lexbuf }
-| "on" { tokens lexbuf }
-| "a" { tokens lexbuf }
-| ['\n' '\t']+ { tokens lexbuf }
-| ['-']?['0' - '9']+ { tokens lexbuf }
-| [':' ';' '{' '}' '(' ')' '[' ']' '|' '@' '#' '$' '%' '^' '&' '*' '|' '\\' '/' '?' '<' '>' ',' '.' '+' '=' '~' '`' '"' '\'']+ { tokens lexbuf }
-| ['a'-'z' 'A'-'Z' '0'-'9' '_' '-']+ { Lexing.lexeme lexbuf }
-| eof { raise End_of_file }
-| _ { tokens lexbuf }
-
-{
-
 module StringMap = Map.Make (String)
 
 let goodmap, badmap =
@@ -36,7 +21,7 @@ let truncate ?(leng = 15) str =
   | _ -> str
 
 let rec buildmap startmap lb =
-  let next_tok = try Some (truncate (tokens lb)) with End_of_file -> None in
+  let next_tok = try Some (truncate (Spamlex.tokens lb)) with End_of_file -> None in
   match next_tok with
   | Some n -> buildmap (incr_map startmap n) lb
   | None -> startmap
@@ -104,5 +89,3 @@ let train_ham ch =
   let oc = open_out (Filename.concat (Sys.getenv "HOME") ".spamdb") in
   Marshal.to_channel oc (newgood, badmap) [];
   close_out oc
-
-}
