@@ -51,7 +51,7 @@ let top_n n lst =
   try
     let ar = Array.of_list lst in
     Array.to_list (Array.sub ar 0 n)
-  with Invalid_argument "Array.sub" -> lst
+  with Invalid_argument _ -> lst
 
 let calc_email_prob lbuf =
   let email = buildmap StringMap.empty lbuf in

@@ -7,7 +7,7 @@ spam: spamlex.cmo spam.cmo cli.cmo
 ## Dependencies
 
 cli.ml: spam.cmo
-spam.ml: spamlex.cmo
+spam.ml: spam.cmi spamlex.cmo
 
 ## Utilities
 
@@ -19,6 +19,9 @@ clean:
 
 %.ml: %.mll
 	ocamllex $<
+
+%.cmi: %.mli
+	ocamlc -c $<
 
 %.cmo: %.ml
 	ocamlc -c $<
