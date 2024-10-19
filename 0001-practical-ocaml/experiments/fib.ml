@@ -8,4 +8,4 @@ let main () =
   print_newline ();
   exit 0
 
-main ()
+let () = main ()

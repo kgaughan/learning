@@ -36,8 +36,8 @@ end = struct
 end
 
 let usage =
-  "client [-server IP] [-port PORT] [-query WORD] (-spam WORD | -ham \
-   WORD) [-count N]\n"
+  "client [-server IP] [-port PORT] [-query WORD] (-spam WORD | -ham WORD) \
+   [-count N]\n"
 
 let ipaddr = ref "127.0.0.1"
 let port = ref 8889

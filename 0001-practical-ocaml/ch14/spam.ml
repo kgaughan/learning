@@ -21,7 +21,9 @@ let truncate ?(leng = 15) str =
   | _ -> str
 
 let rec buildmap startmap lb =
-  let next_tok = try Some (truncate (Spamlex.tokens lb)) with End_of_file -> None in
+  let next_tok =
+    try Some (truncate (Spamlex.tokens lb)) with End_of_file -> None
+  in
   match next_tok with
   | Some n -> buildmap (incr_map startmap n) lb
   | None -> startmap

@@ -22,7 +22,11 @@ spam.ml: spam.cmi spamlex.cmo
 
 .PHONY: clean
 clean:
-	rm -f spam spamlex.ml *.cm*
+	rm -f server client spamlex.ml *.cm*
+
+.PHONY: format
+format:
+	ocamlformat -i *.ml *.mli
 
 ## Build rules
 
