@@ -1,5 +1,5 @@
-COMPILER:=ocamlfind ocamlc
-LINK_FLAGS:=-linkpkg -package unix
+PKGS:=-package unix
+COMPILER:=ocamlfind ocamlc $(PKGS)
 
 ## Binaries
 
@@ -8,10 +8,10 @@ all: client server
 
 # The dependency order is significant
 server: spamlex.cmo spam.cmo spam_server.cmo
-	$(COMPILER) $(LINK_FLAGS) -o $@ $^
+	$(COMPILER) -linkpkg -o $@ $^
 
 client: client.cmo
-	$(COMPILER) $(LINK_FLAGS) -o $@ $^
+	$(COMPILER) -linkpkg -o $@ $^
 
 ## Dependencies
 
