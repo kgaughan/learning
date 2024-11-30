@@ -4,7 +4,10 @@ COMPILER:=ocamlfind ocamlc $(PKGS)
 ## Binaries
 
 .PHONY: all
-all: wc rpncalc
+all: wc rpncalc shortest
+
+shortest: shortest.cmo
+	$(COMPILER) -linkpkg -o $@ $^
 
 wc: wc.cmo
 	$(COMPILER) -linkpkg -o $@ $^
