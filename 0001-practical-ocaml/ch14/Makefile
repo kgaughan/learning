@@ -15,13 +15,4 @@ spam.ml: spam.cmi spamlex.cmo
 clean:
 	rm -f spam spamlex.ml *.cm*
 
-## Build rules
-
-%.ml: %.mll
-	ocamllex $<
-
-%.cmi: %.mli
-	ocamlc -c $<
-
-%.cmo: %.ml
-	ocamlc -c $<
+include ../common.mk

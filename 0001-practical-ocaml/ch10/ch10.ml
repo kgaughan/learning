@@ -1,7 +1,7 @@
 module Setofexceptions = Set.Make (struct
   type t = exn
 
-  let compare = Pervasives.compare
+  let compare = Stdlib.compare
 end)
 
 let find xval ht =
@@ -22,7 +22,7 @@ let read_whole_file filename =
   try
     while true do
       let line = input_line ichan in
-      Buffer.add_string buffer (line ^ "\n")
+      Buffer.add_string ibuffer (line ^ "\n")
     done;
     ""
   with End_of_file ->

@@ -1,6 +1,3 @@
-PKGS:=-package unix
-COMPILER:=ocamlfind ocamlc $(PKGS)
-
 ## Binaries
 
 .PHONY: all
@@ -36,25 +33,4 @@ clean:
 	rm -f csv_parser.ml csv_parser.mli
 	rm -f config_parser.ml config_parser.mli
 
-.PHONY: format
-format:
-	ocamlformat -i *.ml *.mli
-
-## Build rules
-
-%.ml %.mli: %.mly
-	@echo "YACC  $<"
-	@ocamlyacc $<
-	@$(COMPILER) -c $*.mli
-
-%.ml: %.mll
-	@echo "LEX   $<"
-	@ocamllex $<
-
-%.cmi: %.mli
-	@echo "BUILD $<"
-	@$(COMPILER) -c $<
-
-%.cmo: %.ml
-	@echo "BUILD $<"
-	@$(COMPILER) -c $<
+include ../common.mk

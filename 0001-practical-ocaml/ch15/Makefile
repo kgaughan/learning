@@ -1,6 +1,3 @@
-PKGS:=-package unix
-COMPILER:=ocamlfind ocamlc $(PKGS)
-
 ## Binaries
 
 .PHONY: all
@@ -24,17 +21,4 @@ spam.ml: spam.cmi spamlex.cmo
 clean:
 	rm -f server client spamlex.ml *.cm*
 
-.PHONY: format
-format:
-	ocamlformat -i *.ml *.mli
-
-## Build rules
-
-%.ml: %.mll
-	ocamllex $<
-
-%.cmi: %.mli
-	$(COMPILER) -c $<
-
-%.cmo: %.ml
-	$(COMPILER) -c $<
+include ../common.mk

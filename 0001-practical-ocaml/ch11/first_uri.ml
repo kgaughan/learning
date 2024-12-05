@@ -41,7 +41,7 @@ let get_error x =
   try List.assoc x errors
   with Not_found -> "I'm sorry, this is an unidentified error"
 
-let compare (x : t) (y : t) = Pervasives.compare x y
+let compare (x : t) (y : t) = Stdlib.compare x y
 
 let basename x =
   match x with
