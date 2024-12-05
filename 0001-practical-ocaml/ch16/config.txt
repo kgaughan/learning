@@ -1,0 +1,4 @@
+set world = hello;
+set something = nothing;
+set hello = stuff;
+unset something;

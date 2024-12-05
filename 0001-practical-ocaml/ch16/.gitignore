@@ -1,3 +1,7 @@
 /wc
 /rpncalc
 /shortest
+/*_top
+/csv_parser.ml
+/csv_parser.mli
+/config_parser.mli
