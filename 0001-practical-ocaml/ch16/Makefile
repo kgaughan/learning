@@ -7,19 +7,24 @@ COMPILER:=ocamlfind ocamlc $(PKGS)
 all: wc rpncalc shortest csv_top cp_top
 
 csv_top: csv_parser.cmo csv.cmo
-	ocamlmktop -o $@ $^
+	@echo "BUILD $<"
+	@ocamlfind ocamlmktop -o $@ $^
 
 cp_top: config_parser.cmo config_lexer.cmo
-	ocamlmktop -o $@ $^
+	@echo "BUILD $<"
+	@ocamlfind ocamlmktop -o $@ $^
 
 shortest: shortest.cmo
-	$(COMPILER) -linkpkg -o $@ $^
+	@echo "BUILD $<"
+	@$(COMPILER) -linkpkg -o $@ $^
 
 wc: wc.cmo
-	$(COMPILER) -linkpkg -o $@ $^
+	@echo "BUILD $<"
+	@$(COMPILER) -linkpkg -o $@ $^
 
 rpncalc: rpncalc.cmo
-	$(COMPILER) -linkpkg -o $@ $^
+	@echo "BUILD $<"
+	@$(COMPILER) -linkpkg -o $@ $^
 
 ## Dependencies
 
@@ -38,14 +43,18 @@ format:
 ## Build rules
 
 %.ml %.mli: %.mly
-	ocamlyacc $<
-	$(COMPILER) -c $*.mli
+	@echo "YACC  $<"
+	@ocamlyacc $<
+	@$(COMPILER) -c $*.mli
 
 %.ml: %.mll
-	ocamllex $<
+	@echo "LEX   $<"
+	@ocamllex $<
 
 %.cmi: %.mli
-	$(COMPILER) -c $<
+	@echo "BUILD $<"
+	@$(COMPILER) -c $<
 
 %.cmo: %.ml
-	$(COMPILER) -c $<
+	@echo "BUILD $<"
+	@$(COMPILER) -c $<
