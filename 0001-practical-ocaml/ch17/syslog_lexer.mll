@@ -8,7 +8,7 @@ rule tokens = parse
 | [' ' '\t']+ { tokens lexbuf }
 | (['a'-'z' 'A'-'Z']+[' ']+['0'-'9']+[' ']+time as dt) { DATETIME(dt) }
 | ':' { COLON }
-| [^ ' ' '\t' '\n']+ { WORD(Lexing.lexeme lexbuf) }
+| ['a'-'z' 'A'-'Z' '#' '[' ']' '(' ')' '0'-'9' '.' ',' '=' '/' '\\' '-' '@' '_' '!' '%' '^' '&' '*' '~' '"' ''' '`' '|' '<' '>' '?' ';' '+' '$']+ { WORD(Lexing.lexeme lexbuf) }
 | '\n' { EOL }
 | eof { EOF }
 
