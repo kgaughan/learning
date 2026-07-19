@@ -2,15 +2,17 @@ Originally this was going to be about working out how to use Paste and
 PasteScript to generate projects from templates. Now it's going to be me
 evaluating a number of project generation tools.
 
-=============== =======================================
-Tool            Manual/Project Homepage
---------------- ---------------------------------------
-PasteScript_    http://pythonpaste.org/script/
-mr.bob_         http://mrbob.readthedocs.org/
-Templer_        http://templer-manual.readthedocs.org/
-cookiecutter_   https://github.com/audreyr/cookiecutter
-diecutter_      http://diecutter.io/
-=============== =======================================
+=============== ============================================= ======
+Tool            Manual/Project Homepage                       Status
+--------------- --------------------------------------------- ------
+PasteScript_    https://github.com/pasteorg/pastescript/      Dead
+mr.bob_         https://mrbob.readthedocs.org/                Live
+Templer_        https://templer-manual.readthedocs.org/       Dead
+cookiecutter_   https://github.com/cookiecutter/cookiecutter  Live
+diecutter_      https://diecutter.io/                         Dead
+Kapitan_        https://kapitan.dev/latest/                   Live
+Copier_         https://copier.readthedocs.io/en/stable/      Live
+=============== ============================================= ======
 
 I was going to look at Ubuntu Quickly, but that has a heavy Ubuntu bent to it
 and I can't install it from PyPI, so both of those eliminate it early.
@@ -47,7 +49,7 @@ Templer
 
 - I'm not seeing much advantage over just using ``paster create``.
 
-**Verdict**: Nope.
+**Verdict**: Nope. Also, it's dead now.
 
 .. _mr.bob:
 
@@ -171,3 +173,18 @@ PasteScript
 -----------
 
 TODO.
+
+.. _kapitan:
+
+Kapitan
+-------
+
+This is more for configuration generation, but can be used to do code
+generation.
+
+.. _copier:
+
+Copier
+------
+
+Quite a lot like Cookiecutter_. To be more flexible though.
